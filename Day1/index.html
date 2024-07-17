@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up Form</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <form class="signup-form">
+        <h2>Sign Up</h2>
+        <div class="form-group-row">
+          <div class="form-group">
+            <input
+              type="text"
+              id="first-name"
+              name="first-name"
+              placeholder="First Name"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="text"
+              id="last-name"
+              name="last-name"
+              placeholder="Last Name"
+              required
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <input
+            type="tel"
+            id="mobile"
+            name="mobile"
+            placeholder="Mobile Number"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Email"
+            required
+          />
+        </div>
+        <div class="form-group-row">
+          <div class="form-group">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Password"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="password"
+              id="confirm-password"
+              name="confirm-password"
+              placeholder="Confirm Password"
+              required
+            />
+          </div>
+        </div>
+        <div class="form-group-checkbox">
+          <div class="checkbox-label">
+            <input type="checkbox" id="agree" name="agree" required />
+            <label for="agree"><strong>I agree</strong></label>
+          </div>
+          <span
+            >By clicking Register, you agree to the
+            <span class="terms">Terms and Conditions</span> set out by this
+            site, including our Cookie Use.</span
+          >
+        </div>
+        <div class="form-buttons">
+          <button type="submit" class="register-btn">Register</button>
+          <button
+            type="button"
+            class="signin-btn"
+            onclick="window.location.href='signin.html'"
+          >
+            Sign In
+          </button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
