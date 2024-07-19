@@ -5,6 +5,9 @@
 ├── Day1
 │   ├── index.html
 │   └── styles.css
+├── Day2
+│   ├── index.html
+│   └── styles.css
 └── README.md
 ```
 
