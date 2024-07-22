@@ -1,315 +1,435 @@
-// 1. Reverse a number
-function reverseNumber(x) {
-  return parseInt(x.toString().split("").reverse().join(""));
+function reverseNumber() {
+  const input = document.getElementById("reverseNumberInput").value;
+  const output = document.getElementById("reverseNumberOutput");
+  const reversed = input.split("").reverse().join("");
+  output.textContent = `Output: ${reversed}`;
 }
-console.log(reverseNumber(32243)); // Expected Output: 34223
 
-// 2. Check if a string is palindrome
-function isPalindrome(str) {
-  str = str.replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
-  return str === str.split("").reverse().join("");
+function checkPalindrome() {
+  const input = document.getElementById("palindromeInput").value;
+  const output = document.getElementById("palindromeOutput");
+  const normalized = input.toLowerCase().replace(/[^a-z0-9]/g, "");
+  const reversed = normalized.split("").reverse().join("");
+  output.textContent = `Output: ${
+    reversed === normalized ? "Palindrome" : "Not Palindrome"
+  }`;
 }
-console.log(isPalindrome("madam")); // Expected Output: true
-console.log(isPalindrome("nurses run")); // Expected Output: true
 
-// 3. Generate all combinations of a string
-function stringCombinations(str) {
-  let result = [];
-  for (let i = 0; i < str.length; i++) {
-    for (let j = i + 1; j <= str.length; j++) {
-      result.push(str.slice(i, j));
+function generateCombinations() {
+  const input = document.getElementById("combinationsInput").value;
+  const output = document.getElementById("combinationsOutput");
+  const combinations = [];
+  for (let i = 0; i < 1 << input.length; i++) {
+    let combination = "";
+    for (let j = 0; j < input.length; j++) {
+      if (i & (1 << j)) combination += input[j];
+    }
+    if (combination) combinations.push(combination);
+  }
+  output.textContent = `Output: ${combinations.join(", ")}`;
+}
+
+function sortLetters() {
+  const input = document.getElementById("sortLettersInput").value;
+  const output = document.getElementById("sortLettersOutput");
+  const sorted = input.split("").sort().join("");
+  output.textContent = `Output: ${sorted}`;
+}
+
+function capitalizeWords() {
+  const input = document.getElementById("capitalizeInput").value;
+  const output = document.getElementById("capitalizeOutput");
+  const capitalized = input.replace(/\b\w/g, (char) => char.toUpperCase());
+  output.textContent = `Output: ${capitalized}`;
+}
+
+function findLongestWord() {
+  const input = document.getElementById("longestWordInput").value;
+  const output = document.getElementById("longestWordOutput");
+  const words = input.split(" ");
+  const longest = words.reduce((a, b) => (a.length > b.length ? a : b), "");
+  output.textContent = `Output: ${longest}`;
+}
+
+function countVowels() {
+  const input = document.getElementById("countVowelsInput").value;
+  const output = document.getElementById("countVowelsOutput");
+  const count = (input.match(/[aeiou]/gi) || []).length;
+  output.textContent = `Output: ${count}`;
+}
+
+function checkPrime() {
+  const input = parseInt(document.getElementById("primeInput").value, 10);
+  const output = document.getElementById("primeOutput");
+  if (isNaN(input) || input <= 1) {
+    output.textContent = "Output: Not Prime";
+    return;
+  }
+  for (let i = 2; i <= Math.sqrt(input); i++) {
+    if (input % i === 0) {
+      output.textContent = "Output: Not Prime";
+      return;
     }
   }
-  return result;
+  output.textContent = "Output: Prime";
 }
-console.log(stringCombinations("dog")); // Expected Output: [ 'd', 'do', 'dog', 'o', 'og', 'g' ]
 
-// 4. Sort letters of a string in alphabetical order
-function alphabeticalOrder(str) {
-  return str.split("").sort().join("");
-}
-console.log(alphabeticalOrder("webmaster")); // Expected Output: 'abeemrstw'
+function getType() {
+  const input = document.getElementById("typeInput").value;
+  let type;
 
-// 5. Convert the first letter of each word to upper case
-function capitalizeFirstLetter(str) {
-  return str
-    .split(" ")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
-}
-console.log(capitalizeFirstLetter("the quick brown fox")); // Expected Output: 'The Quick Brown Fox'
-
-// 6. Find the longest word within a string
-function findLongestWord(str) {
-  let words = str.split(" ");
-  let longestWord = words[0];
-  for (let word of words) {
-    if (word.length > longestWord.length) {
-      longestWord = word;
-    }
+  // Check if the input is an empty string
+  if (input.trim() === "") {
+    type = "empty string";
   }
-  return longestWord;
-}
-console.log(findLongestWord("Web Development Tutorial")); // Expected Output: 'Development'
-
-// 7. Count the number of vowels in a string
-function countVowels(str) {
-  let vowels = "aeiouAEIOU";
-  let count = 0;
-  for (let char of str) {
-    if (vowels.includes(char)) {
-      count++;
-    }
+  // Check if the input is a number
+  else if (!isNaN(input) && input.trim() !== "") {
+    type = "number";
   }
-  return count;
-}
-console.log(countVowels("The quick brown fox")); // Expected Output: 5
-
-// 8. Check if a number is prime
-function isPrime(num) {
-  if (num <= 1) return false;
-  for (let i = 2; i <= Math.sqrt(num); i++) {
-    if (num % i === 0) return false;
+  // Check if the input is a boolean (true or false)
+  else if (input.toLowerCase() === "true" || input.toLowerCase() === "false") {
+    type = "boolean";
   }
-  return true;
-}
-console.log(isPrime(7)); // Expected Output: true
-
-// 9. Return the type of an argument
-function getType(arg) {
-  return typeof arg;
-}
-console.log(getType(42)); // Expected Output: 'number'
-
-// 10. Return n x n identity matrix
-function identityMatrix(n) {
-  let matrix = [];
-  for (let i = 0; i < n; i++) {
-    let row = [];
-    for (let j = 0; j < n; j++) {
-      row.push(i === j ? 1 : 0);
-    }
-    matrix.push(row);
+  // Otherwise, it's a string
+  else {
+    type = "string";
   }
-  return matrix;
-}
-console.log(identityMatrix(3)); // Expected Output: [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
 
-// 11. Find the second lowest and second greatest numbers
-function secondLowestGreatest(arr) {
-  arr.sort((a, b) => a - b);
-  return [arr[1], arr[arr.length - 2]];
+  const output = document.getElementById("typeOutput");
+  output.textContent = `Output: ${type}`;
 }
-console.log(secondLowestGreatest([1, 2, 3, 4, 5])); // Expected Output: [2, 4]
 
-// 12. Check if a number is perfect
-function isPerfectNumber(num) {
+function generateIdentityMatrix() {
+  const size = parseInt(
+    document.getElementById("identityMatrixInput").value,
+    10
+  );
+  const output = document.getElementById("identityMatrixOutput");
+  if (isNaN(size) || size <= 0) {
+    output.textContent = "Output: Invalid size";
+    return;
+  }
+  const matrix = Array.from({ length: size }, (_, i) =>
+    Array.from({ length: size }, (_, j) => (i === j ? 1 : 0)).join(" ")
+  ).join("\n");
+  output.textContent = `Output:\n${matrix}`;
+}
+
+function findSecondNumbers() {
+  const input = document
+    .getElementById("secondNumbersInput")
+    .value.split(",")
+    .map(Number);
+  const output = document.getElementById("secondNumbersOutput");
+  const unique = [...new Set(input)].sort((a, b) => a - b);
+  const secondLowest = unique[1] || "N/A";
+  const secondGreatest = unique[unique.length - 2] || "N/A";
+  output.textContent = `Output: ${secondLowest}, ${secondGreatest}`;
+}
+
+function checkPerfectNumber() {
+  const input = parseInt(
+    document.getElementById("perfectNumberInput").value,
+    10
+  );
+  const output = document.getElementById("perfectNumberOutput");
+  if (isNaN(input) || input <= 1) {
+    output.textContent = "Output: Not Perfect Number";
+    return;
+  }
   let sum = 0;
-  for (let i = 1; i < num; i++) {
-    if (num % i === 0) sum += i;
+  for (let i = 1; i <= Math.sqrt(input); i++) {
+    if (input % i === 0) {
+      sum += i;
+      if (i !== input / i && i !== 1) {
+        sum += input / i;
+      }
+    }
   }
-  return sum === num;
+  output.textContent = `Output: ${
+    sum === input ? "Perfect Number" : "Not Perfect Number"
+  }`;
 }
-console.log(isPerfectNumber(6)); // Expected Output: true
 
-// 13. Compute the factors of a positive integer
-function factors(num) {
-  let result = [];
-  for (let i = 1; i <= num; i++) {
-    if (num % i === 0) result.push(i);
+function computeFactors() {
+  const input = parseInt(document.getElementById("factorsInput").value, 10);
+  const output = document.getElementById("factorsOutput");
+  if (isNaN(input) || input <= 0) {
+    output.textContent = "Output: Invalid number";
+    return;
   }
-  return result;
+  const factors = [];
+  for (let i = 1; i <= input; i++) {
+    if (input % i === 0) factors.push(i);
+  }
+  output.textContent = `Output: ${factors.join(", ")}`;
 }
-console.log(factors(15)); // Expected Output: [1, 3, 5, 15]
 
-// 14. Convert an amount to coins
-function amountToCoins(amount, coins) {
+function convertToCoins() {
+  let amount = parseInt(document.getElementById("amountInput").value, 10);
+  const coins = document
+    .getElementById("coinsInput")
+    .value.split(",")
+    .map((num) => parseInt(num.trim(), 10)) // Trim spaces and convert to numbers
+    .sort((a, b) => b - a);
+  const output = document.getElementById("coinsOutput");
+
+  if (isNaN(amount) || amount <= 0 || coins.some(isNaN)) {
+    output.textContent = "Output: Invalid input";
+    return;
+  }
+
   let result = [];
   for (let coin of coins) {
     while (amount >= coin) {
-      amount -= coin;
       result.push(coin);
+      amount -= coin;
     }
   }
-  return result;
-}
-console.log(amountToCoins(46, [25, 10, 5, 2, 1])); // Expected Output: [25, 10, 10, 1]
 
-// 15. Compute the value of b^n
-function power(base, exponent) {
-  return Math.pow(base, exponent);
+  output.textContent = `Output: ${result.join(", ")}`;
 }
-console.log(power(2, 3)); // Expected Output: 8
 
-// 16. Extract unique characters from a string
-function uniqueCharacters(str) {
-  return [...new Set(str)].join("");
+function computePower() {
+  const base = parseFloat(document.getElementById("baseInput").value);
+  const exponent = parseInt(document.getElementById("exponentInput").value, 10);
+  const output = document.getElementById("powerOutput");
+  if (isNaN(base) || isNaN(exponent)) {
+    output.textContent = "Output: Invalid input";
+    return;
+  }
+  const result = Math.pow(base, exponent);
+  output.textContent = `Output: ${base}^${exponent} = ${result}`;
 }
-console.log(uniqueCharacters("thequickbrownfoxjumpsoverthelazydog")); // Expected Output: 'thequickbrownfxjmpsvlazydg'
 
-// 17. Count the number of occurrences of each letter in a string
-function letterOccurrences(str) {
-  let occurrences = {};
+function extractUniqueCharacters() {
+  const inputString = document.getElementById("uniqueCharsInput").value;
+  const output = document.getElementById("uniqueCharsOutput");
+  const uniqueChars = [...new Set(inputString)].join("");
+  output.textContent = `Output: ${uniqueChars}`;
+}
+
+function countLetters() {
+  const str = document.getElementById("countLettersInput").value;
+  const output = document.getElementById("countLettersOutput");
+  const count = {};
   for (let char of str) {
-    if (occurrences[char]) {
-      occurrences[char]++;
-    } else {
-      occurrences[char] = 1;
+    if (char.match(/[a-zA-Z]/)) {
+      count[char] = (count[char] || 0) + 1;
     }
   }
-  return occurrences;
+  output.textContent = `Output: ${JSON.stringify(count)}`;
 }
-console.log(letterOccurrences("thequickbrownfoxjumpsoverthelazydog"));
 
-// 18. Binary search
-function binarySearch(arr, target) {
-  let left = 0;
-  let right = arr.length - 1;
+function binarySearch() {
+  const array = document
+    .getElementById("binarySearchInput")
+    .value.split(",")
+    .map(Number);
+  const target = parseInt(
+    document.getElementById("binarySearchTarget").value,
+    10
+  );
+  const output = document.getElementById("binarySearchOutput");
+  if (!array.length || isNaN(target)) {
+    output.textContent = "Output: Invalid input";
+    return;
+  }
+  let left = 0,
+    right = array.length - 1,
+    found = false;
   while (left <= right) {
-    let mid = Math.floor((left + right) / 2);
-    if (arr[mid] === target) return mid;
-    else if (arr[mid] < target) left = mid + 1;
+    const mid = Math.floor((left + right) / 2);
+    if (array[mid] === target) {
+      found = true;
+      break;
+    }
+    if (array[mid] < target) left = mid + 1;
     else right = mid - 1;
   }
-  return -1;
+  output.textContent = `Output: ${found ? "Found" : "Not Found"}`;
 }
-console.log(binarySearch([1, 2, 3, 4, 5], 3)); // Expected Output: 2
 
-// 19. Return array elements larger than a number
-function elementsLargerThan(arr, num) {
-  return arr.filter((el) => el > num);
+function elementsLargerThan() {
+  const array = document
+    .getElementById("largerThanInput")
+    .value.split(",")
+    .map(Number);
+  const number = parseInt(
+    document.getElementById("largerThanNumber").value,
+    10
+  );
+  const output = document.getElementById("largerThanOutput");
+  if (!array.length || isNaN(number)) {
+    output.textContent = "Output: Invalid input";
+    return;
+  }
+  const result = array.filter((el) => el > number);
+  output.textContent = `Output: ${result.join(", ")}`;
 }
-console.log(elementsLargerThan([1, 2, 3, 4, 5], 3)); // Expected Output: [4, 5]
 
-// 20. Generate a string ID of random characters
-function randomStringId(length) {
-  const characters =
+function generateRandomId() {
+  const length = parseInt(document.getElementById("randomIdLength").value, 10);
+  const output = document.getElementById("randomIdOutput");
+  const chars =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   let result = "";
   for (let i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * characters.length));
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
   }
-  return result;
+  output.textContent = `Output: ${result}`;
 }
-console.log(randomStringId(10)); // Expected Output: random string of length 10
 
-// 21. Get all possible subsets of a fixed length
-function fixedLengthSubsets(arr, length) {
-  let result = [];
-  function generateSubsets(current, start) {
+function getSubsets() {
+  const array = document
+    .getElementById("subsetsInput")
+    .value.split(",")
+    .map(Number);
+  const length = parseInt(document.getElementById("subsetLength").value, 10);
+  const output = document.getElementById("subsetsOutput");
+  if (!array.length || isNaN(length) || length <= 0) {
+    output.textContent = "Output: Invalid input";
+    return;
+  }
+  const subsets = [];
+  function generate(current, start) {
     if (current.length === length) {
-      result.push(current);
+      subsets.push(`[${current.join(", ")}]`);
       return;
     }
-    for (let i = start; i < arr.length; i++) {
-      generateSubsets(current.concat(arr[i]), i + 1);
+    for (let i = start; i < array.length; i++) {
+      generate([...current, array[i]], i + 1);
     }
   }
-  generateSubsets([], 0);
-  return result;
+  generate([], 0);
+  output.textContent = `Output: ${subsets.join(", ")}`;
 }
-console.log(fixedLengthSubsets([1, 2, 3], 2)); // Expected Output: [[1, 2], [1, 3], [2, 3]]
 
-// 22. Count the number of occurrences of a specified letter within a string
-function countLetterOccurrences(str, letter) {
-  let count = 0;
-  for (let char of str) {
-    if (char === letter) count++;
+function countSpecificLetter() {
+  const str = document.getElementById("specificLetterInput").value;
+  const letter = document.getElementById("specificLetter").value;
+  const output = document.getElementById("specificLetterOutput");
+  if (!letter || letter.length !== 1) {
+    output.textContent = "Output: Invalid letter";
+    return;
   }
-  return count;
+  const count = (str.match(new RegExp(letter, "g")) || []).length;
+  output.textContent = `Output: ${count}`;
 }
-console.log(countLetterOccurrences("microsoft.com", "o")); // Expected Output: 3
 
-// 23. Find the first not repeated character
-function firstNonRepeatedCharacter(str) {
-  let charCount = {};
+function findFirstNonRepeated() {
+  const str = document.getElementById("firstNonRepeatedInput").value;
+  const output = document.getElementById("firstNonRepeatedOutput");
+  const count = {};
   for (let char of str) {
-    if (charCount[char]) charCount[char]++;
-    else charCount[char] = 1;
+    count[char] = (count[char] || 0) + 1;
   }
-  for (let char of str) {
-    if (charCount[char] === 1) return char;
-  }
-  return null;
+  const result = [...str].find((char) => count[char] === 1) || "None";
+  output.textContent = `Output: ${result}`;
 }
-console.log(firstNonRepeatedCharacter("abacddbec")); // Expected Output: 'e'
 
-// 24. Apply Bubble Sort algorithm
-function bubbleSort(arr) {
-  let len = arr.length;
-  for (let i = 0; i < len; i++) {
-    for (let j = 0; j < len - 1; j++) {
-      if (arr[j] > arr[j + 1]) {
-        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+function bubbleSort() {
+  const array = document
+    .getElementById("bubbleSortInput")
+    .value.split(",")
+    .map(Number);
+  const output = document.getElementById("bubbleSortOutput");
+  if (!array.length) {
+    output.textContent = "Output: Invalid input";
+    return;
+  }
+  for (let i = 0; i < array.length - 1; i++) {
+    for (let j = 0; j < array.length - i - 1; j++) {
+      if (array[j] < array[j + 1]) {
+        [array[j], array[j + 1]] = [array[j + 1], array[j]];
       }
     }
   }
-  return arr;
+  output.textContent = `Output: ${array.join(", ")}`;
 }
-console.log(
-  bubbleSort([12, 345, 4, 546, 122, 84, 98, 64, 9, 1, 3223, 455, 23, 234, 213])
-);
 
-// 25. Return the longest country name
-function longestCountryName(countries) {
-  return countries.reduce(
-    (longest, country) => (country.length > longest.length ? country : longest),
+function longestCountryName() {
+  const countries = document
+    .getElementById("longestCountryNameInput")
+    .value.split(",");
+  const output = document.getElementById("longestCountryNameOutput");
+  if (!countries.length) {
+    output.textContent = "Output: Invalid input";
+    return;
+  }
+  const longest = countries.reduce(
+    (long, current) => (current.length > long.length ? current : long),
     ""
   );
+  output.textContent = `Output: ${longest}`;
 }
-console.log(
-  longestCountryName(["Australia", "Germany", "United States of America"])
-); // Expected Output: "United States of America"
 
-// 26. Find longest substring without repeating characters
-function longestUniqueSubstring(str) {
-  let seen = {};
-  let start = 0;
-  let maxLen = 0;
-  let startIndex = 0;
-  for (let end = 0; end < str.length; end++) {
-    if (seen[str[end]] !== undefined) {
-      start = Math.max(start, seen[str[end]] + 1);
-    }
-    seen[str[end]] = end;
-    if (end - start + 1 > maxLen) {
-      maxLen = end - start + 1;
-      startIndex = start;
+function longestSubstringWithoutRepeating() {
+  const str = document.getElementById(
+    "longestSubstringWithoutRepeatingInput"
+  ).value;
+  const output = document.getElementById(
+    "longestSubstringWithoutRepeatingOutput"
+  );
+  let longest = "";
+  let current = "";
+  const seen = new Set();
+  for (let char of str) {
+    if (!seen.has(char)) {
+      seen.add(char);
+      current += char;
+      if (current.length > longest.length) {
+        longest = current;
+      }
+    } else {
+      seen.clear();
+      current = char;
     }
   }
-  return str.substring(startIndex, startIndex + maxLen);
+  output.textContent = `Output: ${longest}`;
 }
-console.log(longestUniqueSubstring("abcabcbb")); // Expected Output: 'abc'
 
-// 27. Find the longest palindrome in a given string
-function longestPalindrome(str) {
-  let maxPalindrome = "";
+function longestPalindrome() {
+  const str = document.getElementById("longestPalindromeInput").value;
+  const output = document.getElementById("longestPalindromeOutput");
+  const isPalindrome = (s) => s === s.split("").reverse().join("");
+  let longest = "";
   for (let i = 0; i < str.length; i++) {
     for (let j = i; j < str.length; j++) {
-      let substring = str.substring(i, j + 1);
-      if (
-        substring === substring.split("").reverse().join("") &&
-        substring.length > maxPalindrome.length
-      ) {
-        maxPalindrome = substring;
+      const substring = str.slice(i, j + 1);
+      if (isPalindrome(substring) && substring.length > longest.length) {
+        longest = substring;
       }
     }
   }
-  return maxPalindrome;
+  output.textContent = `Output: ${longest}`;
 }
-console.log(longestPalindrome("bananas")); // Expected Output: 'anana'
 
-// 28. Pass a function as parameter
-function executeFunction(func, param) {
-  return func(param);
+function passFunctionAsParameter() {
+  const number = parseInt(
+    document.getElementById("functionParameterInput").value,
+    10
+  );
+  const output = document.getElementById("functionParameterOutput");
+  if (isNaN(number)) {
+    output.textContent = "Output: Invalid number";
+    return;
+  }
+  const double = (num) => num * 2;
+  output.textContent = `Output: ${double(number)}`;
 }
-function sampleFunction(param) {
-  return `Hello, ${param}!`;
-}
-console.log(executeFunction(sampleFunction, "World")); // Expected Output: 'Hello, World!'
 
-// 29. Get the function name
-function getFunctionName(func) {
-  return func.name;
+function exampleFunction() {
+  // This is the function whose name we want to get
 }
-console.log(getFunctionName(getFunctionName)); // Expected Output: 'getFunctionName'
+
+function getFunctionName(fn) {
+  return fn.name;
+}
+
+function showFunctionName() {
+  const functionName = getFunctionName(exampleFunction);
+  const output = document.getElementById("functionNameOutput");
+  output.textContent = `Output: ${functionName}`;
+}
+
