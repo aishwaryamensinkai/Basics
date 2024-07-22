@@ -432,4 +432,3 @@ function showFunctionName() {
   const output = document.getElementById("functionNameOutput");
   output.textContent = `Output: ${functionName}`;
 }
-

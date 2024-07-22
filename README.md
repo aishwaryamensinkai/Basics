@@ -1,6 +1,7 @@
 # Basics
 
-Command to get the file structure
+Command to get the file structure:
+
 ```bash
 tree -L 5 -I node_modules
 ```
